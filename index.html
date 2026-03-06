@@ -19,7 +19,7 @@
       <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header class="w-11/12 mx-auto mt-20">
+  <header id="login-section" class="w-11/12 mx-auto mt-20">
     <div class="flex flex-col items-center gap-2">
       <img src="./assets/github-logo.png" alt="">
       <h2 class="font-semibold text-2xl">GitHub Issues Tracker</h2>
@@ -29,12 +29,12 @@
     <div class="flex flex-col items-center gap-2 my-5 space-y-3">
      <div class="space-y-2">
       <h2>Username</h2>
-      <input class="w-95 py-2 border-gray-300 rounded-md pl-3" type="text" placeholder="Enter UserName">
+      <input id="input-username" class="w-95 py-2 border-gray-300 rounded-md pl-3" type="text" placeholder="Enter UserName">
       <p class="text-blue-600">Default: admin</p>
      </div>
      <div class="space-y-2">
       <h2>Password</h2>
-      <input class="w-95 py-2 border-gray-300 rounded-md pl-3" type="password" placeholder="Enter Password">
+      <input id="input-password" class="w-95 py-2 border-gray-300 rounded-md pl-3" type="password" placeholder="Enter Password">
       <p class="text-blue-600">Default: admin123</p>
      </div>
     </div>
@@ -52,10 +52,13 @@
     </div>
   </header>
 
+  <main id="main-section" class="hidden">
+      <div>
+        <h2>GitHub Issues Tracker</h2>
+      </div>
+  </main>
 
 
-
-
-  <script src="./script/project.js"></script>
+  <script src="./script/login.js"></script>
 </body>
 </html>
