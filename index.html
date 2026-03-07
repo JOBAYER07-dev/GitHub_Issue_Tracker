@@ -60,7 +60,7 @@
     </div>
   </header>
   <!-- hero section start from here -->
-  <main id="main-section" class="hidden">
+  <main id="main-section" class="">
     <!-- navbar start from here -->
     <section>
       <div class="navbar bg-base-100 shadow-sm">
@@ -101,7 +101,7 @@
           <img class="sm:w-13 md:w-10" src="./assets/Aperture.png" alt="">
         </div>
         <div>
-          <h2 class="font-bold text-xl sm:text-2xl"><span>50</span> Issues</h2>
+          <h2 class="font-bold text-xl sm:text-2xl"><span id="issue-count">0</span> Issues</h2>
           <p class="text-gray-500 text-sm sm:text-base">Track and manage <span class="hidden sm:inline">your project
               issues</span></p>
         </div>
@@ -120,15 +120,31 @@
       </div>
 
     </section>
+
     <hr class="my-14 border-x-1 border-gray-300">
+
     <!-- card section start from here -->
     <section class="w-11/12 mx-auto mb-14">
       <div id="main-cards" class="grid grid-cols-1 md:grid-cols-4 gap-4">
-
-       
-
       </div>
     </section>
+
+    <!-- modal section start from here -->
+    <!-- <button class="btn" onclick="my_modal_5.showModal()">open modal</button> -->
+
+    <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
+      <div class="modal-box">
+        <div id="details-container" class="space-y-5">
+
+        </div>
+        <div class="modal-action">
+          <form method="dialog">
+            <!-- if there is a button in form, it will close the modal -->
+            <button class="btn btn-primary">Close</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
 
   </main>
 
