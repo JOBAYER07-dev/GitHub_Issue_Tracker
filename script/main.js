@@ -9,17 +9,22 @@ const loadData = () => {
 };
 
 const getStatusClass = status => {
-  if (status === 'open') return 'bg-green-100 text-green-600 rounded-2xl py-1 px-4 text-center';
-  if (status === 'closed') return 'bg-yellow-100 text-yellow-500 py-1 px-4 text-center';
+  if (status === 'open')
+    return 'bg-green-100 text-green-600 rounded-2xl py-1 px-4 text-center';
+  if (status === 'closed')
+    return 'bg-yellow-100 text-yellow-500 py-1 px-4 text-center';
 };
 
+// fetch priority start from here
 const getPriorityClass = priority => {
   if (priority === 'high')
     return 'bg-green-100 text-green-600 rounded-2xl px-4 text-center';
   if (priority === 'low') return 'bg-red-100 text-red-500 px-4 text-center';
-  if (priority === 'medium') return 'bg-yellow-100 text-yellow-500 px-4 text-center';
+  if (priority === 'medium')
+    return 'bg-yellow-100 text-yellow-500 px-4 text-center';
 };
 
+// fetch labels start from here
 const getLabels = labels => {
   return labels
     .map(label => {
@@ -37,7 +42,7 @@ const getLabels = labels => {
     .join(' ');
 };
 
-// modal
+// modal start from here
 const showModal = async id => {
   const res = await fetch(
     `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`,
@@ -77,6 +82,7 @@ const showModal = async id => {
   my_modal_5.showModal();
 };
 
+// all display cards start form here
 const displayCards = cards => {
   // console.log(cards)
   const cardContainer = document.getElementById('main-cards');
@@ -117,6 +123,7 @@ const displayCards = cards => {
   });
 };
 
+// buttons active inactive start from here
 const activeBtn = activeId => {
   const allBtn = document.getElementById('all-btn');
   const openBtn = document.getElementById('open-btn');
@@ -135,6 +142,7 @@ const activeBtn = activeId => {
   document.getElementById(activeId).classList.remove('btn-outline');
 };
 
+// buttons filters start from here..
 const allBtn = () => {
   displayCards(allData);
   activeBtn('all-btn');
@@ -152,3 +160,16 @@ const closedBtn = () => {
 };
 
 loadData();
+
+// search start from here
+document.addEventListener('keyup', event => {
+  if (event.target.id === 'search-input') {
+    const searchInput = event.target.value.trim().toLowerCase();
+    const searchResult = allData.filter(
+      card =>
+        card.title.toLowerCase().includes(searchInput) ||
+        card.description.toLowerCase().includes(searchInput),
+    );
+    displayCards(searchResult);
+  }
+});
