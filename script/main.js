@@ -7,13 +7,21 @@ const loadData = () => {
       displayCards(allData);
     });
 };
+// dynamic border top start from here
+const getBorderTop = status => {
+  if (status === 'open') return 'border-top-green';
+  if (status === 'closed') return 'border-top-yellow';
+  return 'shadow-md';
+};
 
+//dynamic status start from here
 const getStatusClass = status => {
   if (status === 'open')
-    return 'bg-green-100 text-green-600 rounded-2xl py-1 px-4 text-center';
+    return 'bg-green-100 text-green-600 rounded-2xl py-1 px-4 text-center mt-5';
   if (status === 'closed')
-    return 'bg-yellow-100 text-yellow-500 py-1 px-4 text-center';
+    return 'bg-purple-100 text-purple-600 py-1 px-4 text-center mt-5';
 };
+
 
 // fetch priority start from here
 const getPriorityClass = priority => {
@@ -56,9 +64,9 @@ const showModal = async id => {
       <div class="${getStatusClass(card.status)} p-2 rounded-2xl">
               <h2 class="font-bold">${card.status}</h2>
             </div>
-      <div class="flex flex-row gap-2">
-      <p class="text-gray-500 ">${card.assignee}</p>
-      <p class="text-gray-500 ">${card.updatedAt}</p></div>
+      <div class="flex flex-row gap-5">
+      <p class="text-gray-500 mt-5">${card.assignee}</p>
+      <p class="text-gray-500 mt-5">${card.updatedAt}</p></div>
     </div>
 
     <div class="flex gap-3">
@@ -93,10 +101,10 @@ const displayCards = cards => {
   cards.forEach(card => {
     const createDiv = document.createElement('div');
     createDiv.innerHTML = `
-     <div class="space-y-10 cursor-pointer" onclick="showModal(${card.id})">
+     <div class="space-y-10 cursor-pointer px-5 ${getBorderTop(card.status)}" onclick="showModal(${card.id})">
 
           <div class="flex justify-between">
-            <img class="w-10" src="./assets/Open-Status.png" alt="">
+            <img class="w-10 mt-5" src="./assets/Open-Status.png" alt="">
             <div class="${getStatusClass(card.status)} p-2 rounded-2xl">
               <h2 class="font-bold">${card.status}</h2>
             </div>
