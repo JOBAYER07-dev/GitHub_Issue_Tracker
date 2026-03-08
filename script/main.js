@@ -1,16 +1,15 @@
 let allData = [];
 
 // spinner start from here
-  const toggleSpinner = isLoading => {
-    if (isLoading === true) {
-      document.getElementById('spinner').classList.remove('hidden');
-      document.getElementById('main-cards').classList.add('hidden');
-    } else {
-      document.getElementById('main-cards').classList.remove('hidden');
-      document.getElementById('spinner').classList.add('hidden');
-    }
-  };
-
+const toggleSpinner = isLoading => {
+  if (isLoading === true) {
+    document.getElementById('spinner').classList.remove('hidden');
+    document.getElementById('main-cards').classList.add('hidden');
+  } else {
+    document.getElementById('main-cards').classList.remove('hidden');
+    document.getElementById('spinner').classList.add('hidden');
+  }
+};
 const loadData = () => {
   fetch('https://phi-lab-server.vercel.app/api/v1/lab/issues')
     .then(res => res.json())
@@ -26,7 +25,7 @@ const getBorderTop = status => {
   if (status === 'closed') return 'border-top-yellow';
   return 'shadow-md';
 };
-// dynamic status image start from here 
+// dynamic status image start from here
 const getStatusImage = status => {
   if (status === 'open') return './assets/Open-Status.png';
   if (status === 'closed') return './assets/Closed- Status .png';
@@ -36,30 +35,31 @@ const getStatusClass = status => {
   if (status === 'open')
     return 'bg-green-100 text-green-600 rounded-2xl py-1 px-4 text-center mt-5';
   if (status === 'closed')
-    return 'bg-purple-100 text-purple-600 py-1 px-4 text-center mt-5';
+    return 'bg-purple-200 text-purple-600 py-1 px-4 text-center mt-5';
 };
 // fetch priority start from here
 const getPriorityClass = priority => {
   if (priority === 'high')
-    return 'bg-green-100 text-green-600 rounded-2xl px-4 text-center';
-  if (priority === 'low') return 'bg-red-100 text-red-500 px-4 text-center';
+    return 'bg-green-100 text-green-600 rounded-2xl py-1 mt-5 px-4 text-center';
+  if (priority === 'low')
+    return 'bg-red-100 text-red-500 px-4 py-1 mt-5 text-center';
   if (priority === 'medium')
-    return 'bg-yellow-100 text-yellow-500 px-4 text-center';
+    return 'bg-yellow-100 text-yellow-500 px-4 py-1 mt-5 text-center';
 };
 // fetch labels start from here
 const getLabels = labels => {
   return labels
     .map(label => {
       if (label === 'bug')
-        return `<p class="bg-red-100 border line-clamp-1 border-red-300 text-red-600 rounded-2xl px-2 py-1"><i class="fa-solid fa-bug"></i> ${label}</p>`;
+        return `<p class="bg-red-100 border line-clamp-1 border-red-300 text-red-600 rounded-2xl px-2 py-1 my-3"><i class="fa-solid fa-bug"></i> ${label.toUpperCase()}</p>`;
       if (label === 'help wanted')
-        return `<p class="bg-green-100 border line-clamp-1 border-green-300 text-green-600 rounded-2xl px-2 py-1"><i class="fa-solid fa-hand-holding-heart"></i> ${label}</p>`;
+        return `<p class="bg-green-100 border line-clamp-1 border-green-300 text-green-600 rounded-2xl px-2 py-1 my-3"><i class="fa-solid fa-hand-holding-heart"></i> ${label.toUpperCase()}</p>`;
       if (label === 'enhancement')
-        return `<p class="bg-blue-100 border line-clamp-1 border-blue-300 text-blue-600 rounded-2xl px-2 py-1"><i class="fa-regular fa-star"></i> ${label}</p>`;
+        return `<p class="bg-blue-100 border line-clamp-1 border-blue-300 text-blue-600 rounded-2xl px-2 py-1 my-3"><i class="fa-regular fa-star"></i> ${label.toUpperCase()}</p>`;
       if (label === 'documentation')
-        return `<p class="bg-gray-100 border line-clamp-1 border-gray-300 text-gray-500 rounded-2xl px-2 py-1"><i class="fa-regular fa-file-lines"></i> ${label}</p>`;
+        return `<p class="bg-gray-100 border line-clamp-1 border-gray-300 text-gray-500 rounded-2xl px-2 py-1 my-3"><i class="fa-regular fa-file-lines"></i> ${label.toUpperCase()}</p>`;
       if (label === 'good first issue')
-        return `<p class="bg-pink-100 border line-clamp-1 border-pink-300 text-pink-600 rounded-2xl px-2 py-1"><i class="fa-regular fa-handshake"></i> ${label}</p>`;
+        return `<p class="bg-pink-100 border line-clamp-1 border-pink-300 text-pink-600 rounded-2xl px-2 py-1 my-3"><i class="fa-regular fa-handshake"></i> ${label.toUpperCase()}</p>`;
     })
     .join(' ');
 };
@@ -90,11 +90,11 @@ const showModal = async id => {
     <h2 class="text-gray-800 font-medium">${card.description}</h2>
     <div class="flex gap-5">
       <div class="flex flex-col gap-3">
-        <p class="text-gray-500">ASSIGNED:</p>
-        <h2 class="font-bold ">${card.assignee}</h2>
+        <p class="text-gray-500 mt-5">ASSIGNED:</p>
+        <h2 class="font-bold mt-5">${card.author}</h2>
       </div>
       <div class="flex flex-col gap-3">
-        <p class="text-gray-500">PRIORITYS:</p>
+        <p class="text-gray-500 mt-5">PRIORITYS:</p>
         <div class="${getPriorityClass(card.priority)} p-2 rounded-2xl">
               <h2 class="font-bold">${card.priority}</h2>
             </div>
@@ -120,8 +120,8 @@ const displayCards = cards => {
 
           <div class="flex justify-between">
             <img class="w-10 mt-5" src="${getStatusImage(card.status)}" alt="">
-            <div class="${getStatusClass(card.status)} p-2 rounded-2xl">
-              <h2 class="font-bold">${card.status}</h2>
+            <div class="${getPriorityClass(card.priority)} p-2 rounded-2xl">
+              <h2 class="font-bold">${card.priority}</h2>
             </div>
           </div>
 
@@ -136,7 +136,7 @@ const displayCards = cards => {
           <hr class="border border-gray-300">
 
           <div>
-            <p class="text-gray-400">${card.assignee}</p>
+            <p class="text-gray-400">${card.author}</p>
             <p class="text-gray-400">${card.createdAt}</p>
           </div>
           
