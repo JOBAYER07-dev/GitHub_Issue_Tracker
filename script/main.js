@@ -1,4 +1,16 @@
 let allData = [];
+
+// spinner start from here
+  const toggleSpinner = isLoading => {
+    if (isLoading === true) {
+      document.getElementById('spinner').classList.remove('hidden');
+      document.getElementById('main-cards').classList.add('hidden');
+    } else {
+      document.getElementById('main-cards').classList.remove('hidden');
+      document.getElementById('spinner').classList.add('hidden');
+    }
+  };
+
 const loadData = () => {
   fetch('https://phi-lab-server.vercel.app/api/v1/lab/issues')
     .then(res => res.json())
@@ -7,13 +19,18 @@ const loadData = () => {
       displayCards(allData);
     });
 };
+
 // dynamic border top start from here
 const getBorderTop = status => {
   if (status === 'open') return 'border-top-green';
   if (status === 'closed') return 'border-top-yellow';
   return 'shadow-md';
 };
-
+// dynamic status image start from here 
+const getStatusImage = status => {
+  if (status === 'open') return './assets/Open-Status.png';
+  if (status === 'closed') return './assets/Closed- Status .png';
+};
 //dynamic status start from here
 const getStatusClass = status => {
   if (status === 'open')
@@ -21,8 +38,6 @@ const getStatusClass = status => {
   if (status === 'closed')
     return 'bg-purple-100 text-purple-600 py-1 px-4 text-center mt-5';
 };
-
-
 // fetch priority start from here
 const getPriorityClass = priority => {
   if (priority === 'high')
@@ -31,7 +46,6 @@ const getPriorityClass = priority => {
   if (priority === 'medium')
     return 'bg-yellow-100 text-yellow-500 px-4 text-center';
 };
-
 // fetch labels start from here
 const getLabels = labels => {
   return labels
@@ -49,14 +63,15 @@ const getLabels = labels => {
     })
     .join(' ');
 };
-
 // modal start from here
 const showModal = async id => {
+  toggleSpinner(true);
   const res = await fetch(
     `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`,
   );
   const data = await res.json();
   const card = data.data;
+  toggleSpinner(false);
   document.getElementById('details-container').innerHTML = `
     <div class="space-y-4">
     <h2 class="text-2xl font-bold">${card.title}</h2>
@@ -89,9 +104,9 @@ const showModal = async id => {
   `;
   my_modal_5.showModal();
 };
-
 // all display cards start form here
 const displayCards = cards => {
+  toggleSpinner(true);
   // console.log(cards)
   const cardContainer = document.getElementById('main-cards');
   cardContainer.innerHTML = '';
@@ -104,7 +119,7 @@ const displayCards = cards => {
      <div class="space-y-10 cursor-pointer px-5 ${getBorderTop(card.status)}" onclick="showModal(${card.id})">
 
           <div class="flex justify-between">
-            <img class="w-10 mt-5" src="./assets/Open-Status.png" alt="">
+            <img class="w-10 mt-5" src="${getStatusImage(card.status)}" alt="">
             <div class="${getStatusClass(card.status)} p-2 rounded-2xl">
               <h2 class="font-bold">${card.status}</h2>
             </div>
@@ -129,8 +144,8 @@ const displayCards = cards => {
     `;
     cardContainer.appendChild(createDiv);
   });
+  toggleSpinner(false);
 };
-
 // buttons active inactive start from here
 const activeBtn = activeId => {
   const allBtn = document.getElementById('all-btn');
@@ -149,7 +164,6 @@ const activeBtn = activeId => {
   document.getElementById(activeId).classList.add('btn-primary');
   document.getElementById(activeId).classList.remove('btn-outline');
 };
-
 // buttons filters start from here..
 const allBtn = () => {
   displayCards(allData);
@@ -168,7 +182,6 @@ const closedBtn = () => {
 };
 
 loadData();
-
 // search start from here
 document.addEventListener('keyup', event => {
   if (event.target.id === 'search-input') {
